@@ -6,12 +6,16 @@ var csso = require('gulp-csso');
 var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+var imagemin = require('gulp-imagemin');
 
 
 
 
-
-
+gulp.task('imgmin', function() { 
+    gulp.src('app/img/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dest/img'))
+});
 
 
 
