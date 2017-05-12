@@ -3,7 +3,7 @@ var less = require('gulp-less');
 var browserSync = require('browser-sync');
 var autopref = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
-
+var babel = require('gulp-babel');
 
 
 
@@ -24,15 +24,22 @@ gulp.task('browser-sync', function() { // Создаем таск browser-sync
     });
 });
 gulp.task('html', function(){
-    console.log('watch');
     gulp.src('dest/index.html')
       .pipe(browserSync.reload({stream: true}))
 });
 
+gulp.task('js', function() {
+  return gulp.src('app/js/js.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(gulp.dest('dest/js'))
+})
 
 
 
-gulp.task('watch', ['browser-sync', 'html', 'less',],  function() {
+gulp.task('watch', ['browser-sync', 'html', 'less', 'js'],  function() {
   gulp.watch('app/less/*.less', ['less']);
   gulp.watch('dest/*.html', ['html']);
+  gulp.watch('app/js/*.js', ['js']);
 })
