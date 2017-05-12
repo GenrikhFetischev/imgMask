@@ -4,6 +4,7 @@ var browserSync = require('browser-sync');
 var autopref = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
 var babel = require('gulp-babel');
+var uglify = require('gulp-uglify');
 
 
 
@@ -33,6 +34,7 @@ gulp.task('js', function() {
     .pipe(babel({
       presets: ['es2015']
     }))
+    .pipe(uglify())
     .pipe(gulp.dest('dest/js'))
 })
 

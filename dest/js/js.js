@@ -1,5 +1,1 @@
-'use strict';
-
-var x = function x(_x, y) {
-  return _x + y;
-};
+"use strict";for(var i=10;i>=0;i--)var _x=1;console.log(x);

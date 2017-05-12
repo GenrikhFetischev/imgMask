@@ -1,4 +1,7 @@
 'use strict';
 
 
-let x = (x, y) => x+y;
+for (let i = 10; i >= 0; i--) {
+	let x = 1;
+}
+console.log(x);
