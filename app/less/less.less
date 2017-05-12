@@ -1,6 +1,12 @@
 body {
-	background: red;
+	background: green;
 	transform-orign: center;
 	box-sizing: border-box;
+	.border(red);
 }
 
+@red: red;
+
+.border (@color) {
+	border: 1px solid @color;
+}

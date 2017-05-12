@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var browserSync = require('browser-sync');
 var autopref = require('gulp-autoprefixer');
-
+var csso = require('gulp-csso');
 
 
 
@@ -11,6 +11,7 @@ gulp.task('less', function () {
   return gulp.src('app/less/less.less') // Выборка исходных файлов для обработки плагином
     .pipe(less()) 
     .pipe(autopref())
+    .pipe(csso())
     .pipe(gulp.dest('dest/css')) // Вывод результирующего файла в папку назначения (dest - пункт назначения)
     .pipe(browserSync.reload({stream: true}))
 })

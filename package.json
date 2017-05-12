@@ -6,6 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "gulp-autoprefixer": "^4.0.0",
+    "gulp-csso": "^3.0.0",
     "gulp-uncss": "^1.0.6"
   },
   "scripts": {

@@ -1,6 +1,1 @@
-body {
-  background: red;
-  transform-orign: center;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
+body{background:green;transform-orign:center;-webkit-box-sizing:border-box;box-sizing:border-box;border:1px solid red}
