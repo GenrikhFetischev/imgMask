@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var browserSync = require('browser-sync');
-
+var autopref = require('gulp-autoprefixer');
 
 
 
@@ -9,7 +9,8 @@ var browserSync = require('browser-sync');
 
 gulp.task('less', function () {
   return gulp.src('app/less/less.less') // Выборка исходных файлов для обработки плагином
-    .pipe(less()) // Вызов Gulp плагина для обработки файла
+    .pipe(less()) 
+    .pipe(autopref())
     .pipe(gulp.dest('dest/css')) // Вывод результирующего файла в папку назначения (dest - пункт назначения)
     .pipe(browserSync.reload({stream: true}))
 })
@@ -26,7 +27,6 @@ gulp.task('html', function(){
     gulp.src('dest/index.html')
       .pipe(browserSync.reload({stream: true}))
 });
-
 
 
 
