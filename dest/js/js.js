@@ -1,1 +1,1 @@
-"use strict";for(var i=10;i>=0;i--)var _x=1;console.log(x);
+"use strict";

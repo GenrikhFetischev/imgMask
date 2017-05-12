@@ -5,23 +5,48 @@ var autopref = require('gulp-autoprefixer');
 var csso = require('gulp-csso');
 var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 gulp.task('less', function () {
-  return gulp.src('app/less/less.less') // Выборка исходных файлов для обработки плагином
+  return gulp.src('app/less/less.less') 
     .pipe(less()) 
+    .on('error', function(err) {
+            const type = err.type || '';
+            const message = err.message || '';
+            const extract = err.extract || [];
+            const line = err.line || '';
+            const column = err.column || '';
+            gutil.log(gutil.colors.red.bold('[Less error]') +' '+ gutil.colors.bgRed(type) +' ('+ line +':'+ column +')');
+            gutil.log(gutil.colors.bold('message:') +' '+ message);
+            gutil.log(gutil.colors.bold('codeframe:') +'\n'+ extract.join('\n'));
+            this.emit('end');
+        })
     .pipe(autopref())
     .pipe(csso())
-    .pipe(gulp.dest('dest/css')) // Вывод результирующего файла в папку назначения (dest - пункт назначения)
+    .pipe(gulp.dest('dest/css')) 
     .pipe(browserSync.reload({stream: true}))
 })
-gulp.task('browser-sync', function() { // Создаем таск browser-sync
-    browserSync({ // Выполняем browser Sync
-        server: { // Определяем параметры сервера
-            baseDir: 'dest' // Директория для сервера - app
+gulp.task('browser-sync', function() { 
+    browserSync({ 
+        server: { 
+            baseDir: 'dest' 
         },
-        notify: false // Отключаем уведомления
+        notify: false 
     });
 });
 gulp.task('html', function(){
@@ -34,14 +59,19 @@ gulp.task('js', function() {
     .pipe(babel({
       presets: ['es2015']
     }))
+
     .pipe(uglify())
     .pipe(gulp.dest('dest/js'))
 })
 
 
 
-gulp.task('watch', ['browser-sync', 'html', 'less', 'js'],  function() {
+gulp.task('watch', ['browser-sync', 'html', 'less', 'js', ],  function() {
   gulp.watch('app/less/*.less', ['less']);
   gulp.watch('dest/*.html', ['html']);
   gulp.watch('app/js/*.js', ['js']);
+
 })
+
+
+
