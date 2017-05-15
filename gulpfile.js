@@ -7,6 +7,7 @@ var babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var imagemin = require('gulp-imagemin');
+var htmlmin  = require('gulp-htmlmin');
 
 
 
@@ -41,6 +42,7 @@ gulp.task('less', function () {
             this.emit('end');
         })
     .pipe(autopref())
+    .pipe(gulp.dest('app/css')) 
     .pipe(csso())
     .pipe(gulp.dest('dest/css')) 
     .pipe(browserSync.reload({stream: true}))
@@ -48,13 +50,15 @@ gulp.task('less', function () {
 gulp.task('browser-sync', function() { 
     browserSync({ 
         server: { 
-            baseDir: 'dest' 
+            baseDir: 'app' 
         },
         notify: false 
     });
 });
 gulp.task('html', function(){
-    gulp.src('dest/index.html')
+    gulp.src('app/index.html')
+      .pipe(htmlmin())
+      .pipe(gulp.dest('dest'))
       .pipe(browserSync.reload({stream: true}))
 });
 
@@ -63,7 +67,6 @@ gulp.task('js', function() {
     .pipe(babel({
       presets: ['es2015']
     }))
-
     .pipe(uglify())
     .pipe(gulp.dest('dest/js'))
 })
@@ -72,7 +75,7 @@ gulp.task('js', function() {
 
 gulp.task('watch', ['browser-sync', 'html', 'less', 'js', ],  function() {
   gulp.watch('app/less/*.less', ['less']);
-  gulp.watch('dest/*.html', ['html']);
+  gulp.watch('app/*.html', ['html']);
   gulp.watch('app/js/*.js', ['js']);
 
 })
