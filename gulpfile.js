@@ -67,6 +67,15 @@ gulp.task('js', function() {
     .pipe(babel({
       presets: ['es2015']
     }))
+    .on('error', function(err) {
+            const message = err.message || '';
+            const errName = err.name || '';
+            const codeFrame = err.codeFrame || '';
+            gutil.log(gutil.colors.red.bold('[JS babel error]')+' '+ gutil.colors.bgRed(errName));
+            gutil.log(gutil.colors.bold('message:') +' '+ message);
+            gutil.log(gutil.colors.bold('codeframe:') + '\n' + codeFrame);
+            this.emit('end');
+        })
     .pipe(uglify())
     .pipe(gulp.dest('dest/js'))
 })
