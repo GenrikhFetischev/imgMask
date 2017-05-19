@@ -1,1 +1,60 @@
-"use strict";!function(){function e(e){var d=new FileReader;d.onload=function(e){the_url=e.target.result,c.src=the_url,c.onload=function(){t=c.width,n=c.height,c.style.display="none",a.querySelector(".placeholder").style.display="none",o.setAttribute("width",t+"px"),o.setAttribute("height",n+"px"),o.setAttribute("display","block"),a.style.width=t+"px",a.style.height=n+"px",a.style.minHeight=n+"px"},r.src=the_url},d.readAsDataURL(e)}var t=void 0,n=void 0,a=document.querySelector(".imgCont"),d=document.querySelector(".input-button"),o=document.createElement("canvas"),i=o.getContext("2d"),r=new Image,l=new Image;o.classList.add("canvas"),a.appendChild(o);var c=document.createElement("img");c.classList.add("hidden"),document.body.appendChild(c);var s=document.createElement("img");s.classList.add("result"),a.appendChild(s),d.addEventListener("change",function(t){e(d.files[0])}),r.onload=function(){i.drawImage(r,0,0,t,n),l.src="img/border.png",l.onload=function(){i.drawImage(l,0,0,t,n);var e=o.toDataURL("image/jpeg");s.src=e,document.body.appendChild(c);var a=document.querySelector(".download");a.href=e,a.style.opacity=1}}}();
+'use strict';
+
+(function () {
+
+	var w = void 0,
+	    h = void 0;
+	var imgCont = document.querySelector('.imgCont');
+	var inpBtn = document.querySelector('.input-button');
+	var canvas = document.createElement('canvas');
+	var context = canvas.getContext("2d");
+	var img1 = new Image();
+	var border = new Image();
+	canvas.classList.add('canvas');
+	imgCont.appendChild(canvas);
+	var res = document.createElement('img');
+	res.classList.add('hidden');
+	document.body.appendChild(res);
+	var result = document.createElement('img');
+	result.classList.add('result');
+	imgCont.appendChild(result);
+	inpBtn.addEventListener('change', function (event) {
+		var file = inpBtn.files[0];
+		renderImage(file);
+	});
+
+	function renderImage(file) {
+		var reader = new FileReader();
+		reader.onload = function (event) {
+			var the_url = event.target.result;
+			res.src = the_url;
+			res.onload = function () {
+				w = res.width;
+				h = res.height;
+				res.style.display = 'none';
+				imgCont.querySelector('.placeholder').style.display = 'none';
+				canvas.setAttribute('width', w + 'px');
+				canvas.setAttribute('height', h + 'px');
+				canvas.setAttribute('display', 'block');
+				imgCont.style.width = w + 'px';
+				imgCont.style.height = h + 'px';
+				imgCont.style.minHeight = h + 'px';
+			};
+			img1.src = the_url;
+		};
+		reader.readAsDataURL(file);
+	}
+
+	img1.onload = function () {
+		context.drawImage(img1, 0, 0, w, h);
+		border.src = 'img/border.png';
+		border.onload = function () {
+			context.drawImage(border, 0, 0, w, h);
+			var imgData = canvas.toDataURL('image/jpeg');
+			result.src = imgData;
+			var btn = document.querySelector('.download');
+			btn.href = imgData;
+			btn.style.opacity = 1;
+		};
+	};
+})();

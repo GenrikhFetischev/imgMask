@@ -71,7 +71,7 @@ gulp.task('js', function() {
             gutil.log(gutil.colors.bold('codeframe:') + '\n' + codeFrame);
             this.emit('end');
         })
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest('dest/js'))
 })
 

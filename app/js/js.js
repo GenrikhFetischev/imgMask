@@ -25,7 +25,7 @@
 		function renderImage(file) {
  		 let reader = new FileReader();
   		reader.onload = function(event) {
- 		    the_url = event.target.result;
+ 		    let the_url = event.target.result;
  		    res.src = the_url;
  		    res.onload = () => {
  		    	w = res.width;
@@ -53,7 +53,6 @@
 				context.drawImage(border, 0, 0, w, h);
 				let imgData = canvas.toDataURL('image/jpeg');
 				result.src = imgData;
-				document.body.appendChild(res);
 				let btn = document.querySelector('.download');
 				btn.href = imgData;
 				btn.style.opacity = 1;
