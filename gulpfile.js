@@ -22,11 +22,6 @@ gulp.task('imgmin', function() {
 
 
 
-
-
-
-
-
 gulp.task('less', function () {
   return gulp.src('app/less/less.less') 
     .pipe(less()) 

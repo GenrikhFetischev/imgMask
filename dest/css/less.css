@@ -1,1 +1,1 @@
-body{background:#00f;border:1px solid red}
+canvas{border:1px solid red;display:none}.container{text-align:center}.input-button{padding:20px 0}.imgCont{margin:auto;position:relative;width:90%;height:90%;max-width:500px;min-height:300px;border:1px solid red}.placeholder{position:absolute;height:20px;top:0;bottom:0;right:0;left:0;margin:auto;text-align:center}.download{display:inline-block;margin:15px;padding:5px 10px;text-decoration:none;background:#696969;color:#fff;opacity:0}.result{max-width:500px}
