@@ -1,11 +1,27 @@
 (function () {
 
 		let w, h;
-		let maxW = 700;
 		let imgCont = document.querySelector('.imgCont');
 		let inpBtn = document.querySelector('.input-button');
+		let canvas = document.createElement('canvas')
+		let context = canvas.getContext("2d");
+		let img1 = new Image();
+		let border = new Image();
+		canvas.classList.add('canvas');
+		imgCont.appendChild(canvas);
+		let res = document.createElement('img');
+		res.classList.add('hidden');
+		document.body.appendChild(res);
+		let result = document.createElement('img');
+		result.classList.add('result');
+		imgCont.appendChild(result);
+		inpBtn.addEventListener('change', (event) => {
+					let file = inpBtn.files[0];
+		    	renderImage(file);
+				}
+		);
 
-		
+
 		function renderImage(file) {
  		 let reader = new FileReader();
   		reader.onload = function(event) {
@@ -15,64 +31,26 @@
  		    	w = res.width;
  		    	h = res.height;
  		    	res.style.display = 'none';
- 		    	let size = calcSize(w, h, maxW);
  		    	imgCont.querySelector('.placeholder').style.display = 'none';
- 		    	canvas.setAttribute('width', size.width + 'px');
- 		    	canvas.setAttribute('height', size.height + 'px');
+ 		    	canvas.setAttribute('width', w + 'px');
+ 		    	canvas.setAttribute('height', h + 'px');
  		    	canvas.setAttribute('display', 'block');
+ 		    	imgCont.style.width =  w + 'px';
+ 		    	imgCont.style.height =  h + 'px';
+ 		    	imgCont.style.minHeight =  h + 'px';
+
  		    }
  		    img1.src = the_url;
  		  }
  		  reader.readAsDataURL(file);
 		}
-
-		inpBtn.addEventListener('change', (event) => {
-			let file = inpBtn.files[0];
-    	renderImage(file);
-		});
-
-		function calcSize(w, h, maxW) {
-			let wh = h/w;
-			let newW = maxW;
-			let newH = newW * wh;
-			return size = {
-				height: h,
-				width: w,
-			}
-		}
-
-
-
-		let canvas = document.createElement('canvas')
-		canvas.classList.add('canvas');
-		imgCont.appendChild(canvas);
-		let context = canvas.getContext("2d");
-
-
-		let res = document.createElement('img');
-		res.classList.add('hidden');
-		document.body.appendChild(res);
-
-		let result = document.createElement('img');
-		result.classList.add('result');
-		imgCont.appendChild(result);
-
-
-
-
 		
 
-		let img1 = new Image();
-		let border = new Image();
 		img1.onload = function() {
-			let size = calcSize(w, h, maxW);
-			console.log(size);
-			context.drawImage(img1, 0, 0, size.width, size.height);
-
+			context.drawImage(img1, 0, 0, w, h);
 			border.src = 'img/border.png';
 			border.onload = function() {
-				context.drawImage(border, 0, 0, size.width, size.height);
-
+				context.drawImage(border, 0, 0, w, h);
 				let imgData = canvas.toDataURL('image/jpeg');
 				result.src = imgData;
 				document.body.appendChild(res);
@@ -81,18 +59,5 @@
 				btn.style.opacity = 1;
 			};
 		};
-
-
-
-
-		
-
-
-
-
-
-
-
-
 
 })();

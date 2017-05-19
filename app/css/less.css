@@ -15,7 +15,7 @@ canvas {
   height: 90%;
   max-width: 500px;
   min-height: 300px;
-  border: 1px solid red;
+  border: 5px solid gray;
 }
 .placeholder {
   position: absolute;
@@ -36,6 +36,8 @@ canvas {
   background: dimgray;
   color: white;
   opacity: 0;
+  -webkit-transition-duration: 0.5s;
+          transition-duration: 0.5s;
 }
 .result {
   max-width: 500px;
