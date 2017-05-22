@@ -8,7 +8,6 @@
 		var files = inpBtn.files;
 		renderImage(files);
 	});
-
 	var drawImg = function drawImg(img1) {
 		var canvas = document.createElement('canvas');
 		var context = canvas.getContext("2d");
@@ -32,7 +31,6 @@
 			imgCont.appendChild(imgMin);
 		};
 	};
-
 	var renderImage = function renderImage(files) {
 		if (files) imgCont.innerHTML = '';
 		for (var i = files.length - 1; i >= 0; i--) {
