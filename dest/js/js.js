@@ -1,60 +1,50 @@
 'use strict';
 
 (function () {
-
-	var w = void 0,
-	    h = void 0;
 	var imgCont = document.querySelector('.imgCont');
 	var inpBtn = document.querySelector('.input-button');
-	var canvas = document.createElement('canvas');
-	var context = canvas.getContext("2d");
-	var img1 = new Image();
-	var border = new Image();
-	canvas.classList.add('canvas');
-	imgCont.appendChild(canvas);
 	var res = document.createElement('img');
-	res.classList.add('hidden');
-	document.body.appendChild(res);
-	var result = document.createElement('img');
-	result.classList.add('result');
-	imgCont.appendChild(result);
 	inpBtn.addEventListener('change', function (event) {
-		var file = inpBtn.files[0];
-		renderImage(file);
+		var files = inpBtn.files;
+		renderImage(files);
 	});
 
-	function renderImage(file) {
-		var reader = new FileReader();
-		reader.onload = function (event) {
-			var the_url = event.target.result;
-			res.src = the_url;
-			res.onload = function () {
-				w = res.width;
-				h = res.height;
-				res.style.display = 'none';
-				imgCont.querySelector('.placeholder').style.display = 'none';
-				canvas.setAttribute('width', w + 'px');
-				canvas.setAttribute('height', h + 'px');
-				canvas.setAttribute('display', 'block');
-				imgCont.style.width = w + 'px';
-				imgCont.style.height = h + 'px';
-				imgCont.style.minHeight = h + 'px';
-			};
-			img1.src = the_url;
-		};
-		reader.readAsDataURL(file);
-	}
-
-	img1.onload = function () {
-		context.drawImage(img1, 0, 0, w, h);
+	var drawImg = function drawImg(img1) {
+		var canvas = document.createElement('canvas');
+		var context = canvas.getContext("2d");
+		var border = new Image();
+		canvas.setAttribute('width', img1.width + 'px');
+		canvas.setAttribute('height', img1.height + 'px');
+		context.drawImage(img1, 0, 0);
 		border.src = 'img/border.png';
 		border.onload = function () {
-			context.drawImage(border, 0, 0, w, h);
-			var imgData = canvas.toDataURL('image/jpeg');
-			result.src = imgData;
-			var btn = document.querySelector('.download');
-			btn.href = imgData;
-			btn.style.opacity = 1;
+			context.drawImage(border, 0, 0, img1.width, img1.height);
+			var result = document.createElement("img");
+			result.src = canvas.toDataURL('image/jpeg');
+			result.classList.add('min-img');
+			var imgMin = document.createElement('a');
+			var img = document.createElement('img');
+			img.src = canvas.toDataURL('image/jpeg');
+			imgMin.href = canvas.toDataURL('image/jpeg');
+			imgMin.download = true;
+			imgMin.classList.add('imgMin');
+			imgMin.appendChild(img);
+			imgCont.appendChild(imgMin);
 		};
+	};
+
+	var renderImage = function renderImage(files) {
+		if (files) imgCont.innerHTML = '';
+		for (var i = files.length - 1; i >= 0; i--) {
+			var reader = new FileReader();
+			reader.onload = function (event) {
+				var img1 = new Image();
+				img1.src = event.target.result;
+				img1.onload = function () {
+					drawImg(img1);
+				};
+			};
+			reader.readAsDataURL(files[i]);
+		}
 	};
 })();

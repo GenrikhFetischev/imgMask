@@ -1,62 +1,85 @@
 (function () {
+	let imgCont = document.querySelector('.imgCont');
+	let inpBtn = document.querySelector('.input-button');
+	let res = document.createElement('img');
+	inpBtn.addEventListener('change', (event) => {
+				let files = inpBtn.files;
+	    	renderImage(files);
+			}
+	);
 
-		let w, h;
-		let imgCont = document.querySelector('.imgCont');
-		let inpBtn = document.querySelector('.input-button');
-		let canvas = document.createElement('canvas')
+
+	let drawImg = (img1) => {
+		let canvas = document.createElement('canvas');
 		let context = canvas.getContext("2d");
-		let img1 = new Image();
 		let border = new Image();
-		canvas.classList.add('canvas');
-		imgCont.appendChild(canvas);
-		let res = document.createElement('img');
-		res.classList.add('hidden');
-		document.body.appendChild(res);
-		let result = document.createElement('img');
-		result.classList.add('result');
-		imgCont.appendChild(result);
-		inpBtn.addEventListener('change', (event) => {
-					let file = inpBtn.files[0];
-		    	renderImage(file);
-				}
-		);
-
-
-		function renderImage(file) {
- 		 let reader = new FileReader();
-  		reader.onload = function(event) {
- 		    let the_url = event.target.result;
- 		    res.src = the_url;
- 		    res.onload = () => {
- 		    	w = res.width;
- 		    	h = res.height;
- 		    	res.style.display = 'none';
- 		    	imgCont.querySelector('.placeholder').style.display = 'none';
- 		    	canvas.setAttribute('width', w + 'px');
- 		    	canvas.setAttribute('height', h + 'px');
- 		    	canvas.setAttribute('display', 'block');
- 		    	imgCont.style.width =  w + 'px';
- 		    	imgCont.style.height =  h + 'px';
- 		    	imgCont.style.minHeight =  h + 'px';
-
- 		    }
- 		    img1.src = the_url;
- 		  }
- 		  reader.readAsDataURL(file);
+		canvas.setAttribute('width', img1.width + 'px');
+ 		canvas.setAttribute('height', img1.height + 'px');
+		context.drawImage(img1, 0, 0);
+		border.src = 'img/border.png';
+		border.onload = () => {
+			context.drawImage(border, 0, 0, img1.width, img1.height);
+			let result = document.createElement("img");
+			result.src = canvas.toDataURL('image/jpeg');
+			result.classList.add('min-img');
+			let imgMin = document.createElement('a');
+			let img = document.createElement('img');
+			img.src = canvas.toDataURL('image/jpeg');
+			imgMin.href = canvas.toDataURL('image/jpeg');
+			imgMin.download = true;
+			imgMin.classList.add('imgMin');
+			imgMin.appendChild(img);
+			imgCont.appendChild(imgMin);
 		}
-		
+	}
 
-		img1.onload = function() {
-			context.drawImage(img1, 0, 0, w, h);
-			border.src = 'img/border.png';
-			border.onload = function() {
-				context.drawImage(border, 0, 0, w, h);
-				let imgData = canvas.toDataURL('image/jpeg');
-				result.src = imgData;
-				let btn = document.querySelector('.download');
-				btn.href = imgData;
-				btn.style.opacity = 1;
-			};
-		};
+
+	let renderImage = (files) => {
+		if(files) imgCont.innerHTML = '';
+		for (var i = files.length - 1; i >= 0; i--) {
+			let reader = new FileReader();
+			reader.onload = (event) => {
+				let img1 = new Image();
+				img1.src = event.target.result;
+				img1.onload = () => {
+					drawImg(img1)
+				}
+			}
+			reader.readAsDataURL(files[i]);
+		}
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 })();

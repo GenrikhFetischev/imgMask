@@ -1,6 +1,6 @@
 canvas {
 	border: 1px solid red;
-	display: none;
+	// display: none;
 }
 
 .container {
@@ -11,6 +11,10 @@ canvas {
 	padding: 20px 0;
 }
 .imgCont {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
 	margin: auto;
 	position: relative;
 	width: 90%;
@@ -43,3 +47,45 @@ canvas {
 .result {
 	max-width: 500px;
 }
+
+.imgMin {
+	// margin: 20px;
+	display: block;
+	position: relative;
+	background-size: 100% auto;
+	background-position: top left;
+	overflow: hidden;
+	img {
+		width: 150px;
+		height: auto;
+	}
+}
+.imgMin::after {
+	box-sizing: border-box;
+	content: 'Click for download';
+	position: absolute;
+	width: 150px;
+	padding: 10px;
+	text-align: center;
+	background: dimgray;
+	color: white;
+	bottom: -40px;
+	left: 0;
+	transition-duration: 0.2s;
+}
+.imgMin:hover::after{
+	bottom: 0;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,5 @@
 canvas {
   border: 1px solid red;
-  display: none;
 }
 .container {
   text-align: center;
@@ -9,6 +8,16 @@ canvas {
   padding: 20px 0;
 }
 .imgCont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin: auto;
   position: relative;
   width: 90%;
@@ -41,4 +50,33 @@ canvas {
 }
 .result {
   max-width: 500px;
+}
+.imgMin {
+  display: block;
+  position: relative;
+  background-size: 100% auto;
+  background-position: top left;
+  overflow: hidden;
+}
+.imgMin img {
+  width: 150px;
+  height: auto;
+}
+.imgMin::after {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  content: 'Click for download';
+  position: absolute;
+  width: 150px;
+  padding: 10px;
+  text-align: center;
+  background: dimgray;
+  color: white;
+  bottom: -40px;
+  left: 0;
+  -webkit-transition-duration: 0.2s;
+          transition-duration: 0.2s;
+}
+.imgMin:hover::after {
+  bottom: 0;
 }
